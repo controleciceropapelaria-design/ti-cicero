@@ -1,6 +1,11 @@
 [build]
   publish = "."
 
+[[rewrites]]
+  from = "/portal"
+  to = "/portal.html"
+  status = 200
+
 [[headers]]
   for = "/*.js"
   [headers.values]
