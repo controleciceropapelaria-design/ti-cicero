@@ -1,0 +1,19 @@
+Setor,Código,Item,Categoria
+Administrativo,TI-PC-001,Desktop Dell OptiPlex 5090,Computador
+Administrativo,TI-MON-001,Monitor Dell 27",Monitor
+Administrativo,TI-MOUSE-001,Mouse Logitech MX Master 3,Periférico
+Administrativo,TI-TECLADO-001,Teclado Mecânico Corsair,Periférico
+Financeiro,TI-PC-002,Notebook Dell XPS 13,Computador
+Financeiro,TI-MON-002,Monitor LG 24",Monitor
+Financeiro,TI-PRINTER-001,Impressora HP LaserJet,Rede/Impressora
+Financeiro,TI-MOUSE-002,Mouse Wireless Logitech,Periférico
+Operacional,TI-PC-003,Desktop HP ProDesk,Computador
+Operacional,TI-MON-003,Monitor ASUS 27",Monitor
+Operacional,TI-HEADSET-001,Headset Corsair Wireless,Periférico
+Operacional,TI-SWITCH-001,Switch Cisco 48 portas,Rede/Impressora
+Operacional,TI-SCANNER-001,Scanner Canon ImageRunner,Rede/Impressora
+TI,TI-PC-004,Desktop Workstation Lenovo,Computador
+TI,TI-ROUTER-001,Roteador Cisco ASR,Rede/Impressora
+TI,TI-AP-001,Access Point Ubiquiti,Rede/Impressora
+Vendas,TI-PC-005,Notebook Lenovo ThinkBook,Computador
+Vendas,TI-MON-004,Monitor ASUS ProArt 32",Monitor

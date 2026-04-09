@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TI-CICERO - Gerenciamento de Ativos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- LOGIN OVERLAY (só aparece se não autenticado) -->
+    <div id="loginOverlay" class="auth-overlay">
+        <div class="auth-container">
+            <div class="auth-box">
+                <div class="auth-header">
+                    <svg class="auth-logo" viewBox="0 0 710 296" width="120" height="50">
+                        <g transform="translate(0,296) scale(0.1,-0.1)" fill="currentColor" stroke="none">
+                            <path d="M1879 2420 c-9 -5 -22 -23 -29 -40 -33 -81 64 -147 125 -85 65 64 -17 171 -96 125z"/>
+                            <path d="M969 2011 c-90 -29 -156 -71 -222 -141 -102 -108 -147 -226 -148 -386 -1 -152 46 -282 138 -384 152 -170 411 -217 615 -114 74 38 168 135 206 214 44 91 44 100 2 115 -66 23 -90 26 -90 13 -1 -28 -57 -121 -99 -163 -25 -25 -70 -58 -100 -73 -49 -24 -68 -27 -151 -27 -87 0 -101 3 -161 32 -295 146 -300 619 -7 769 42 22 70 28 141 32 100 5 156 -7 221 -49 56 -35 121 -116 143 -180 13 -36 22 -48 33 -43 8 3 37 10 63 17 45 10 48 13 42 36 -24 94 -132 235 -222 288 -108 63 -284 83 -404 44z"/>
+                            <path d="M2598 2007 c-227 -78 -373 -310 -354 -566 11 -153 69 -275 176 -375 71 -66 141 -101 240 -122 227 -48 443 55 545 259 48 95 47 101 -22 120 -31 9 -57 16 -58 14 -1 -1 -13 -27 -27 -57 -37 -80 -98 -144 -175 -182 -61 -30 -75 -33 -157 -32 -77 0 -100 4 -148 26 -183 84 -277 302 -223 513 65 247 314 369 535 263 65 -32 132 -105 165 -181 l28 -64 61 17 c71 20 71 22 25 117 -57 118 -169 216 -290 254 -89 28 -233 26 -321 -4z"/>
+                            <path d="M3821 2014 c-83 -22 -150 -62 -222 -134 -255 -252 -191 -723 120 -888 144 -77 336 -80 480 -7 67 33 159 121 200 190 l35 57 -24 18 c-13 10 -36 25 -51 34 -28 17 -28 17 -48 -21 -53 -104 -167 -186 -280 -201 -210 -29 -382 87 -436 293 -8 33 -15 74 -15 92 l0 33 435 0 435 0 0 63 c0 127 -49 252 -135 345 -92 99 -201 143 -355 141 -47 0 -109 -7 -139 -15z m305 -137 c87 -44 150 -132 178 -249 l6 -28 -359 0 -360 0 8 28 c25 85 87 175 155 221 71 49 120 62 226 58 79 -3 104 -8 146 -30z"/>
+                            <path d="M4697 1994 c-26 -20 -47 -41 -47 -46 0 -5 43 -65 95 -133 l95 -124 0 -371 0 -371 68 3 67 3 5 370 c4 329 7 374 23 402 49 90 154 151 273 160 l74 6 0 70 0 70 -66 -7 c-138 -14 -244 -72 -330 -180 l-31 -39 -82 109 c-45 60 -86 110 -90 112 -4 1 -28 -14 -54 -34z"/>
+                            <path d="M5865 2020 c-193 -39 -348 -189 -399 -387 -21 -79 -21 -228 0 -307 61 -238 264 -396 507 -396 155 0 265 46 372 154 111 112 156 228 156 396 0 167 -49 290 -160 401 -71 70 -139 109 -236 134 -63 16 -173 18 -240 5z m278 -155 c242 -120 301 -482 110 -686 -26 -28 -75 -65 -108 -82 -56 -29 -67 -31 -165 -32 -93 0 -111 3 -162 27 -123 57 -208 175 -228 316 -22 155 26 302 128 394 82 74 155 99 277 95 75 -3 100 -8 148 -32z"/>
+                            <path d="M1852 1483 l3 -528 68 -3 67 -3 0 531 0 530 -70 0 -70 0 2 -527z"/>
+                            <path d="M1868 670 c-25 -26 -29 -36 -24 -63 14 -70 89 -94 133 -43 38 44 28 97 -24 124 -34 18 -52 14 -85 -18z"/>
+                        </g>
+                    </svg>
+                    <p>Painel de Administração TI</p>
+                </div>
+
+                <div id="authErrorMsg" class="auth-error" style="display: none;"></div>
+
+                <form id="loginForm" onsubmit="handleAdminLogin(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="adminEmail" placeholder="seu-email@dominio.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" id="adminPassword" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Versão 2.0 • Supabase + Realtime</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-layout" id="appLayout" style="display: none;">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg class="logo-icon-svg" viewBox="0 0 710 296">
+                        <g transform="translate(0,296) scale(0.1,-0.1)" fill="currentColor" stroke="none">
+                            <path d="M1879 2420 c-9 -5 -22 -23 -29 -40 -33 -81 64 -147 125 -85 65 64 -17 171 -96 125z"/>
+                            <path d="M969 2011 c-90 -29 -156 -71 -222 -141 -102 -108 -147 -226 -148 -386 -1 -152 46 -282 138 -384 152 -170 411 -217 615 -114 74 38 168 135 206 214 44 91 44 100 2 115 -66 23 -90 26 -90 13 -1 -28 -57 -121 -99 -163 -25 -25 -70 -58 -100 -73 -49 -24 -68 -27 -151 -27 -87 0 -101 3 -161 32 -295 146 -300 619 -7 769 42 22 70 28 141 32 100 5 156 -7 221 -49 56 -35 121 -116 143 -180 13 -36 22 -48 33 -43 8 3 37 10 63 17 45 10 48 13 42 36 -24 94 -132 235 -222 288 -108 63 -284 83 -404 44z"/>
+                            <path d="M2598 2007 c-227 -78 -373 -310 -354 -566 11 -153 69 -275 176 -375 71 -66 141 -101 240 -122 227 -48 443 55 545 259 48 95 47 101 -22 120 -31 9 -57 16 -58 14 -1 -1 -13 -27 -27 -57 -37 -80 -98 -144 -175 -182 -61 -30 -75 -33 -157 -32 -77 0 -100 4 -148 26 -183 84 -277 302 -223 513 65 247 314 369 535 263 65 -32 132 -105 165 -181 l28 -64 61 17 c71 20 71 22 25 117 -57 118 -169 216 -290 254 -89 28 -233 26 -321 -4z"/>
+                            <path d="M3821 2014 c-83 -22 -150 -62 -222 -134 -255 -252 -191 -723 120 -888 144 -77 336 -80 480 -7 67 33 159 121 200 190 l35 57 -24 18 c-13 10 -36 25 -51 34 -28 17 -28 17 -48 -21 -53 -104 -167 -186 -280 -201 -210 -29 -382 87 -436 293 -8 33 -15 74 -15 92 l0 33 435 0 435 0 0 63 c0 127 -49 252 -135 345 -92 99 -201 143 -355 141 -47 0 -109 -7 -139 -15z m305 -137 c87 -44 150 -132 178 -249 l6 -28 -359 0 -360 0 8 28 c25 85 87 175 155 221 71 49 120 62 226 58 79 -3 104 -8 146 -30z"/>
+                            <path d="M4697 1994 c-26 -20 -47 -41 -47 -46 0 -5 43 -65 95 -133 l95 -124 0 -371 0 -371 68 3 67 3 5 370 c4 329 7 374 23 402 49 90 154 151 273 160 l74 6 0 70 0 70 -66 -7 c-138 -14 -244 -72 -330 -180 l-31 -39 -82 109 c-45 60 -86 110 -90 112 -4 1 -28 -14 -54 -34z"/>
+                            <path d="M5865 2020 c-193 -39 -348 -189 -399 -387 -21 -79 -21 -228 0 -307 61 -238 264 -396 507 -396 155 0 265 46 372 154 111 112 156 228 156 396 0 167 -49 290 -160 401 -71 70 -139 109 -236 134 -63 16 -173 18 -240 5z m278 -155 c242 -120 301 -482 110 -686 -26 -28 -75 -65 -108 -82 -56 -29 -67 -31 -165 -32 -93 0 -111 3 -162 27 -123 57 -208 175 -228 316 -22 155 26 302 128 394 82 74 155 99 277 95 75 -3 100 -8 148 -32z"/>
+                            <path d="M1852 1483 l3 -528 68 -3 67 -3 0 531 0 530 -70 0 -70 0 2 -527z"/>
+                            <path d="M1868 670 c-25 -26 -29 -36 -24 -63 14 -70 89 -94 133 -43 38 44 28 97 -24 124 -34 18 -52 14 -85 -18z"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">▦</span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="chamados">
+                    <span class="nav-icon">⚬</span>
+                    <span class="nav-label">Chamados</span>
+                </a>
+                <a href="#" class="nav-item" data-page="ativos">
+                    <span class="nav-icon">▢</span>
+                    <span class="nav-label">Ativos</span>
+                </a>
+                <a href="#" class="nav-item" data-page="estoque">
+                    <span class="nav-icon">↥</span>
+                    <span class="nav-label">Estoque</span>
+                </a>
+                <a href="#" class="nav-item" data-page="setores">
+                    <span class="nav-icon">▣</span>
+                    <span class="nav-label">Setores</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="userInitial">A</div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Admin</div>
+                        <div class="user-status">Online</div>
+                    </div>
+                </div>
+                <button class="btn btn-secondary btn-logout" onclick="handleAdminLogout()" style="width: 100%; margin-top: var(--spacing-lg);">
+                    Sair
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- HEADER -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 id="page-title">Dashboard</h1>
+                    <p id="page-subtitle">Visão geral do sistema de gerenciamento de ativos</p>
+                </div>
+            </header>
+
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+
+                <!-- PÁGINA: DASHBOARD -->
+                <div class="page active" id="page-dashboard" data-page="dashboard">
+                    <div class="page-header">
+                        <div class="breadcrumb">
+                            <span>Home</span>
+                            <span class="breadcrumb-sep">/</span>
+                            <span>Dashboard</span>
+                        </div>
+                    </div>
+
+                    <div class="page-body">
+                        <div class="dashboard-container">
+                            <div class="cards-grid">
+                                <div class="dashboard-card dashboard-card--link" onclick="navigateToPage('ativos')" title="Ver ativos">
+                                    <div class="card-header">
+                                        <h3>Total de Ativos</h3>
+                                        <span class="card-icon">▢</span>
+                                    </div>
+                                    <div class="card-value" id="totalAtivos">0</div>
+                                    <div class="card-footer">equipamentos cadastrados →</div>
+                                </div>
+
+                                <div class="dashboard-card dashboard-card--link" onclick="navigateToPage('ativos')" title="Ver ativos em uso">
+                                    <div class="card-header">
+                                        <h3>Em Uso</h3>
+                                        <span class="card-icon">✓</span>
+                                    </div>
+                                    <div class="card-value" id="ativosEmUso">0</div>
+                                    <div class="card-footer">equipamentos alocados →</div>
+                                </div>
+
+                                <div class="dashboard-card dashboard-card--link" onclick="navigateToPage('estoque')" title="Ver estoque">
+                                    <div class="card-header">
+                                        <h3>Disponíveis</h3>
+                                        <span class="card-icon">↥</span>
+                                    </div>
+                                    <div class="card-value" id="ativosDisponiveis">0</div>
+                                    <div class="card-footer">em estoque →</div>
+                                </div>
+
+                                <div class="dashboard-card dashboard-card--link" onclick="navigateToPage('chamados')" title="Ver chamados">
+                                    <div class="card-header">
+                                        <h3>Chamados Abertos</h3>
+                                        <span class="card-icon">⚬</span>
+                                    </div>
+                                    <div class="card-value" id="chamadosAbertos">0</div>
+                                    <div class="card-footer">aguardando suporte →</div>
+                                </div>
+                            </div>
+
+                            <div class="dashboard-sections">
+                                <div class="dashboard-section">
+                                    <h2>Ativos por Setor</h2>
+                                    <div id="setoresSummary" class="summary-list"></div>
+                                </div>
+
+                                <div class="dashboard-section">
+                                    <h2>Chamados por Status</h2>
+                                    <div id="chamadosSummary" class="summary-list"></div>
+                                </div>
+
+                                <div class="dashboard-section">
+                                    <h2>Categorias de Ativos</h2>
+                                    <div id="categoriasSummary" class="summary-list"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PÁGINA: CHAMADOS (Kanban) -->
+                <div class="page" id="page-chamados" data-page="chamados" style="display: none;">
+                    <div class="page-header">
+                        <div class="breadcrumb">
+                            <span>Home</span>
+                            <span class="breadcrumb-sep">/</span>
+                            <span>Chamados</span>
+                        </div>
+                    </div>
+
+                    <div class="page-body">
+                        <div class="chamados-container">
+                            <div class="kanban-toolbar">
+                                <button id="openNewCallModalBtn" class="btn btn-primary">+ Novo Chamado</button>
+                                <input type="text" id="chamadoSearchInput" placeholder="Pesquisar chamados..." class="kanban-search">
+                            </div>
+
+                            <div class="kanban-board">
+                                <!-- Coluna: Aberto -->
+                                <div class="kanban-column">
+                                    <div class="column-header">
+                                        <h3>Aberto</h3>
+                                        <span class="column-count" id="count-aberto">0</span>
+                                    </div>
+                                    <div class="column-cards" id="column-aberto" data-status="aberto"></div>
+                                </div>
+
+                                <!-- Coluna: Em Andamento -->
+                                <div class="kanban-column">
+                                    <div class="column-header">
+                                        <h3>Em Andamento</h3>
+                                        <span class="column-count" id="count-em_andamento">0</span>
+                                    </div>
+                                    <div class="column-cards" id="column-em_andamento" data-status="em_andamento"></div>
+                                </div>
+
+                                <!-- Coluna: Aguardando -->
+                                <div class="kanban-column">
+                                    <div class="column-header">
+                                        <h3>Aguardando</h3>
+                                        <span class="column-count" id="count-aguardando">0</span>
+                                    </div>
+                                    <div class="column-cards" id="column-aguardando" data-status="aguardando"></div>
+                                </div>
+
+                                <!-- Coluna: Fechado -->
+                                <div class="kanban-column">
+                                    <div class="column-header">
+                                        <h3>Fechado</h3>
+                                        <span class="column-count" id="count-fechado">0</span>
+                                    </div>
+                                    <div class="column-cards" id="column-fechado" data-status="fechado"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PÁGINA: ATIVOS -->
+                <div class="page" id="page-ativos" data-page="ativos" style="display: none;">
+                    <div class="page-header">
+                        <div class="breadcrumb">
+                            <span>Home</span>
+                            <span class="breadcrumb-sep">/</span>
+                            <span>Ativos</span>
+                        </div>
+                    </div>
+
+                    <div class="page-body">
+                        <div class="ativos-container">
+                            <div class="ativos-toolbar">
+                                <button id="novoAtivoBtn" class="btn btn-primary">+ Novo Ativo</button>
+                                <button id="importAtivosBtn" class="btn btn-secondary">Importar CSV</button>
+                                <input type="file" id="ativosFile" style="display: none;" accept=".csv,.xlsx">
+                            </div>
+
+                            <div class="filter-group">
+                                <input type="text" id="ativoSearchInput" placeholder="Pesquisar ativo...">
+                                <select id="setorAtivosFilter">
+                                    <option value="">Todos os setores</option>
+                                </select>
+                                <select id="statusAtivoFilter">
+                                    <option value="">Todos status</option>
+                                    <option value="disponivel">Disponível</option>
+                                    <option value="em_uso">Em Uso</option>
+                                    <option value="manutencao">Manutenção</option>
+                                    <option value="descarte">Descarte</option>
+                                </select>
+                            </div>
+
+                            <div class="table-wrapper">
+                                <table class="ativos-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Descrição</th>
+                                            <th>Setor</th>
+                                            <th>Categoria</th>
+                                            <th>Status</th>
+                                            <th>Valor</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ativosTableBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PÁGINA: ESTOQUE -->
+                <div class="page" id="page-estoque" data-page="estoque" style="display: none;">
+                    <div class="page-header">
+                        <div class="breadcrumb">
+                            <span>Home</span>
+                            <span class="breadcrumb-sep">/</span>
+                            <span>Estoque</span>
+                        </div>
+                    </div>
+
+                    <div class="page-body">
+                        <div class="estoque-container">
+                            <div class="estoque-toolbar">
+                                <input type="text" id="estoqueSearchInput" placeholder="Pesquisar item de estoque...">
+                            </div>
+
+                            <div class="estoque-grid">
+                                <div id="estoqueContent" class="estoque-items"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PÁGINA: SETORES -->
+                <div class="page" id="page-setores" data-page="setores" style="display: none;">
+                    <div class="page-header">
+                        <div class="breadcrumb">
+                            <span>Home</span>
+                            <span class="breadcrumb-sep">/</span>
+                            <span>Setores</span>
+                        </div>
+                    </div>
+
+                    <div class="page-body">
+                        <div class="setores-container">
+                            <div class="setores-toolbar">
+                                <button id="novoSetorBtn" class="btn btn-primary" onclick="openNovoSetorModal()">+ Novo Setor</button>
+                            </div>
+
+                            <div class="setores-grid" id="setoresGrid"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Novo Chamado -->
+    <div id="novoCallModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Novo Chamado</h2>
+            <form id="novoCallForm">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" id="callName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="callEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="callTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea id="callDescription" required rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Prioridade</label>
+                    <select id="callPriority" required>
+                        <option value="baixa">Baixa</option>
+                        <option value="media">Média</option>
+                        <option value="alta">Alta</option>
+                        <option value="critica">Crítica</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Abrir Chamado</button>
+                    <button type="button" class="btn btn-secondary" id="cancelCallBtn">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Gerenciar Chamado -->
+    <div id="gerenciarCallModal" class="modal">
+        <div class="modal-content modal-chat">
+            <span class="close">&times;</span>
+            <h2>Gerenciar Chamado</h2>
+
+            <!-- Detalhes do Chamado -->
+            <div class="chamado-info-section">
+                <h3>Informações do Chamado</h3>
+                <div class="info-row">
+                    <span class="label">ID:</span>
+                    <span class="value" id="gerenciarChamadoId"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Nome:</span>
+                    <span class="value" id="gerenciarChamadoNome"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Email:</span>
+                    <span class="value" id="gerenciarChamadoEmail"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Setor:</span>
+                    <span class="value" id="gerenciarChamadoSetor"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Categoria:</span>
+                    <span class="value" id="gerenciarChamadoCategoria"></span>
+                </div>
+                <div class="info-row" id="gerenciarChamadoCampoExtraRow" style="display: none;">
+                    <span class="label" id="gerenciarChamadoCampoExtraLabel"></span>
+                    <span class="value" id="gerenciarChamadoCampoExtraValor"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Data:</span>
+                    <span class="value" id="gerenciarChamadoData"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Prioridade:</span>
+                    <span class="value"><span id="gerenciarChamadoPrioridade" class="badge-priority"></span></span>
+                </div>
+                <div class="chamado-desc">
+                    <span class="label">Descrição:</span>
+                    <p id="gerenciarChamadoDescricao"></p>
+                </div>
+            </div>
+
+            <!-- Formulário de Gerenciamento -->
+            <h3>Gerenciar Atendimento</h3>
+            <form id="gerenciarCallForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="callStatusSelect" required>
+                            <option value="aberto">Aberto</option>
+                            <option value="em_andamento">Em Andamento</option>
+                            <option value="aguardando">Aguardando Suporte</option>
+                            <option value="fechado">Fechado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Responsável</label>
+                        <input type="text" id="callAssignee">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Resposta/Comentário</label>
+                    <textarea id="callResponse" rows="4"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Atualizar</button>
+                    <button type="button" class="btn btn-secondary" id="cancelGerenciarBtn">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Novo Ativo -->
+    <div id="novoAtivoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Novo Ativo</h2>
+            <form id="novoAtivoForm">
+                <div class="form-group">
+                    <label>Código</label>
+                    <input type="text" id="ativoCodigo" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <input type="text" id="ativoDescricao" required>
+                </div>
+                <div class="form-group">
+                    <label>Setor</label>
+                    <select id="ativoSetor" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select id="ativoCategoria" required>
+                        <option value="">Selecione</option>
+                        <option value="computador">Computador (Desktop)</option>
+                        <option value="notebook">Notebook</option>
+                        <option value="monitor">Monitor</option>
+                        <option value="periferico">Periférico</option>
+                        <option value="rede_impressora">Rede/Impressora</option>
+                        <option value="fonte_energia">Fonte e Energia</option>
+                    </select>
+                </div>
+
+                <!-- SPECS: Monitor -->
+                <div id="specsMonitor" class="specs-section" style="display:none;">
+                    <div class="specs-section-title">Especificações do Monitor</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Marca</label>
+                            <input type="text" id="monitorMarca" placeholder="Ex: LG, Samsung, Dell">
+                        </div>
+                        <div class="form-group">
+                            <label>Modelo</label>
+                            <input type="text" id="monitorModelo" placeholder="Ex: 27UK850-W">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tamanho da Tela (polegadas)</label>
+                            <input type="number" id="monitorTamanho" min="1" step="0.1" placeholder="Ex: 27">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Painel</label>
+                            <select id="monitorTipo">
+                                <option value="">Selecione</option>
+                                <option value="IPS">IPS</option>
+                                <option value="LED">LED</option>
+                                <option value="VA">VA</option>
+                                <option value="TN">TN</option>
+                                <option value="OLED">OLED</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Conexões Disponíveis</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item"><input type="checkbox" id="connVGA" value="VGA"> VGA</label>
+                            <label class="checkbox-item"><input type="checkbox" id="connHDMI" value="HDMI"> HDMI</label>
+                            <label class="checkbox-item"><input type="checkbox" id="connDP" value="DisplayPort"> DisplayPort</label>
+                            <label class="checkbox-item"><input type="checkbox" id="connDVI" value="DVI"> DVI</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SPECS: Periférico -->
+                <div id="specsPeriferico" class="specs-section" style="display:none;">
+                    <div class="specs-section-title">Especificações do Periférico</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tipo de Periférico</label>
+                            <select id="perifericoTipo">
+                                <option value="">Selecione</option>
+                                <option value="Mouse">Mouse</option>
+                                <option value="Teclado">Teclado</option>
+                                <option value="Headset">Headset</option>
+                                <option value="Webcam">Webcam</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Marca</label>
+                            <input type="text" id="perifericoMarca" placeholder="Ex: Logitech, Razer">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Modelo</label>
+                        <input type="text" id="perifericoModelo" placeholder="Ex: MX Master 3">
+                    </div>
+                </div>
+
+                <!-- SPECS: Computador / Notebook -->
+                <div id="specsComputador" class="specs-section" style="display:none;">
+                    <div class="specs-section-title">Especificações</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Marca</label>
+                            <input type="text" id="compMarca" placeholder="Ex: Dell, Lenovo, HP">
+                        </div>
+                        <div class="form-group">
+                            <label>Modelo</label>
+                            <input type="text" id="compModelo" placeholder="Ex: OptiPlex 7090">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Processador</label>
+                            <input type="text" id="compProcessador" placeholder="Ex: Intel Core i5-12400">
+                        </div>
+                        <div class="form-group">
+                            <label>Núcleos</label>
+                            <input type="number" id="compNucleos" min="1" placeholder="Ex: 6">
+                        </div>
+                    </div>
+                    <div class="form-row three-cols">
+                        <div class="form-group">
+                            <label>Tipo de Memória</label>
+                            <select id="compMemoriaTipo">
+                                <option value="">Selecione</option>
+                                <option value="DDR3">DDR3</option>
+                                <option value="DDR4">DDR4</option>
+                                <option value="DDR5">DDR5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Memória Instalada (GB)</label>
+                            <input type="number" id="compMemoriaTamanho" min="1" placeholder="Ex: 16">
+                        </div>
+                        <div class="form-group">
+                            <label>Capacidade Máx. (GB)</label>
+                            <input type="number" id="compMemoriaMax" min="1" placeholder="Ex: 64">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Sistema Operacional</label>
+                            <select id="compSistema">
+                                <option value="">Selecione</option>
+                                <option value="Windows 10">Windows 10</option>
+                                <option value="Windows 11">Windows 11</option>
+                                <option value="Linux">Linux</option>
+                                <option value="macOS">macOS</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>GPU (Placa de Vídeo)</label>
+                            <input type="text" id="compGpu" placeholder="Ex: NVIDIA GTX 1650 / Integrada">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tipo de Armazenamento</label>
+                            <select id="compHdTipo">
+                                <option value="">Selecione</option>
+                                <option value="HD">HD (Disco Rígido)</option>
+                                <option value="SSD">SSD</option>
+                                <option value="HDD+SSD">HDD + SSD</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Capacidade de Armazenamento (GB)</label>
+                            <input type="number" id="compHdTamanho" min="1" placeholder="Ex: 512, 1000">
+                        </div>
+                    </div>
+                    <div id="compPlacaMaeGroup" class="form-group" style="display:none;">
+                        <label>Placa-Mãe</label>
+                        <input type="text" id="compPlacaMae" placeholder="Ex: ASUS Prime B450M-A">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="ativoStatus" required>
+                        <option value="disponivel">Disponível</option>
+                        <option value="em_uso">Em Uso</option>
+                        <option value="manutencao">Manutenção</option>
+                        <option value="descarte">Descarte</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Valor (R$)</label>
+                    <input type="number" id="ativoValor" min="0" step="0.01">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-secondary" id="cancelAtivoBtn">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Detalhes Chamado (read-only) -->
+    <div id="detalhesChamadoModal" class="modal">
+        <div class="modal-content modal-chat">
+            <span class="close" onclick="fecharDetalhesChamado()">&times;</span>
+            <h2 id="detalhesModalTitle">Detalhes do Chamado</h2>
+
+            <div class="chamado-info-section">
+                <div class="info-row">
+                    <span class="label">ID:</span>
+                    <span class="value" id="detalhesId"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Nome:</span>
+                    <span class="value" id="detalhesNome"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Email:</span>
+                    <span class="value" id="detalhesEmail"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Setor:</span>
+                    <span class="value" id="detalhesSetor"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Categoria:</span>
+                    <span class="value" id="detalhesCategoria"></span>
+                </div>
+                <div class="info-row" id="detalhesCampoExtraRow" style="display: none;">
+                    <span class="label" id="detalhesCampoExtraLabel"></span>
+                    <span class="value" id="detalhesCampoExtraValor"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Data:</span>
+                    <span class="value" id="detalhesData"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Status:</span>
+                    <span class="value"><span id="detalhesStatus" class="badge"></span></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Prioridade:</span>
+                    <span class="value"><span id="detalhesPrioridade" class="badge-priority"></span></span>
+                </div>
+                <div class="chamado-desc">
+                    <span class="label">Descrição:</span>
+                    <p id="detalhesDescricao"></p>
+                </div>
+                <div class="chamado-desc" id="detalhesResponsavelDiv" style="display: none;">
+                    <span class="label">Responsável:</span>
+                    <p id="detalhesResponsavel"></p>
+                </div>
+            </div>
+
+            <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: flex-end;">
+                <button class="btn btn-secondary" onclick="fecharDetalhesChamado()">Fechar</button>
+                <button class="btn btn-primary" onclick="abrirEditorDeDetalhes()">Gerenciar</button>
+                <button class="btn btn-primary" onclick="abrirChatDeDetalhes()">Chat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Chat por Chamado -->
+    <div id="chatModal" class="modal">
+        <div class="modal-content modal-chat">
+            <span class="close" onclick="chamadosManager.closeChatModal()">&times;</span>
+            <h2 id="chatModalTitle">Chat do Chamado</h2>
+
+            <!-- Detalhes do Chamado -->
+            <div id="chatChamadoInfo" class="chamado-info-section">
+                <h3>Detalhes do Chamado</h3>
+                <div class="info-row">
+                    <span class="label">ID:</span>
+                    <span class="value" id="chatChamadoId"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Nome:</span>
+                    <span class="value" id="chatChamadoNome"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Email:</span>
+                    <span class="value" id="chatChamadoEmail"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Setor:</span>
+                    <span class="value" id="chatChamadoSetor"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Categoria:</span>
+                    <span class="value" id="chatChamadoCategoria"></span>
+                </div>
+                <div class="info-row" id="chatChamadoCampoExtraRow" style="display: none;">
+                    <span class="label" id="chatChamadoCampoExtraLabel"></span>
+                    <span class="value" id="chatChamadoCampoExtraValor"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Status:</span>
+                    <span class="value"><span id="chatChamadoStatus" class="badge"></span></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Prioridade:</span>
+                    <span class="value"><span id="chatChamadoPrioridade" class="badge-priority"></span></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Data:</span>
+                    <span class="value" id="chatChamadoData"></span>
+                </div>
+                <div class="chamado-desc">
+                    <span class="label">Descrição:</span>
+                    <p id="chatChamadoDescricao"></p>
+                </div>
+            </div>
+
+            <!-- Chat -->
+            <h3 style="margin-top: var(--spacing-xl);">Conversa</h3>
+            <div id="chatHistory" class="chat-history"></div>
+            <form id="chatForm" onsubmit="chamadosManager.submitChatMessage(event)">
+                <div class="chat-input-group">
+                    <textarea id="chatInput" placeholder="Digite sua mensagem..." rows="3" required></textarea>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Novo Setor -->
+    <div id="novoSetorModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeNovoSetorModal()">&times;</span>
+            <h2>Novo Setor</h2>
+            <form id="novoSetorForm" onsubmit="submitNovoSetor(event)">
+                <div class="form-group">
+                    <label>Nome do Setor</label>
+                    <input type="text" id="setorNome" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Criar</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeNovoSetorModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Editar Setor -->
+    <div id="editarSetorModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditSetorModal()">&times;</span>
+            <h2>Editar Setor</h2>
+            <form id="editarSetorForm" onsubmit="submitEditSetor(event)">
+                <div class="form-group">
+                    <label>Nome do Setor</label>
+                    <input type="text" id="setorNomeEdit" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeEditSetorModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SheetJS para importar Excel/CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
+
+    <!-- Scripts locais (módulos) -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>

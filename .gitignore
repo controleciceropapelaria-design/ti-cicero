@@ -1,0 +1,31 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local env (se adicionar build step depois)
+.env
+.env.local
+.env.*.local
+
+# Supabase CLI (se usar localmente)
+.supabase/
+
+# Node (se adicionar build step depois)
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Misc
+.cache/
+.DS_Store

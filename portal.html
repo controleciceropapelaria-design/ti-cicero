@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Suporte - TI-CICERO</title>
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+    <div class="portal-container">
+        <!-- LOGIN/REGISTER OVERLAY -->
+        <div id="authOverlay" class="auth-overlay-portal" style="display: none;">
+            <div class="auth-container-portal">
+                <!-- LOGIN FORM -->
+                <div id="loginSection" class="auth-section">
+                    <div class="auth-header-portal">
+                        <svg class="auth-logo-portal" viewBox="0 0 710 296">
+                            <g transform="translate(0,296) scale(0.1,-0.1)" fill="currentColor" stroke="none">
+                                <path d="M1879 2420 c-9 -5 -22 -23 -29 -40 -33 -81 64 -147 125 -85 65 64 -17 171 -96 125z"/>
+                                <path d="M969 2011 c-90 -29 -156 -71 -222 -141 -102 -108 -147 -226 -148 -386 -1 -152 46 -282 138 -384 152 -170 411 -217 615 -114 74 38 168 135 206 214 44 91 44 100 2 115 -66 23 -90 26 -90 13 -1 -28 -57 -121 -99 -163 -25 -25 -70 -58 -100 -73 -49 -24 -68 -27 -151 -27 -87 0 -101 3 -161 32 -295 146 -300 619 -7 769 42 22 70 28 141 32 100 5 156 -7 221 -49 56 -35 121 -116 143 -180 13 -36 22 -48 33 -43 8 3 37 10 63 17 45 10 48 13 42 36 -24 94 -132 235 -222 288 -108 63 -284 83 -404 44z"/>
+                                <path d="M2598 2007 c-227 -78 -373 -310 -354 -566 11 -153 69 -275 176 -375 71 -66 141 -101 240 -122 227 -48 443 55 545 259 48 95 47 101 -22 120 -31 9 -57 16 -58 14 -1 -1 -13 -27 -27 -57 -37 -80 -98 -144 -175 -182 -61 -30 -75 -33 -157 -32 -77 0 -100 4 -148 26 -183 84 -277 302 -223 513 65 247 314 369 535 263 65 -32 132 -105 165 -181 l28 -64 61 17 c71 20 71 22 25 117 -57 118 -169 216 -290 254 -89 28 -233 26 -321 -4z"/>
+                                <path d="M3821 2014 c-83 -22 -150 -62 -222 -134 -255 -252 -191 -723 120 -888 144 -77 336 -80 480 -7 67 33 159 121 200 190 l35 57 -24 18 c-13 10 -36 25 -51 34 -28 17 -28 17 -48 -21 -53 -104 -167 -186 -280 -201 -210 -29 -382 87 -436 293 -8 33 -15 74 -15 92 l0 33 435 0 435 0 0 63 c0 127 -49 252 -135 345 -92 99 -201 143 -355 141 -47 0 -109 -7 -139 -15z m305 -137 c87 -44 150 -132 178 -249 l6 -28 -359 0 -360 0 8 28 c25 85 87 175 155 221 71 49 120 62 226 58 79 -3 104 -8 146 -30z"/>
+                                <path d="M4697 1994 c-26 -20 -47 -41 -47 -46 0 -5 43 -65 95 -133 l95 -124 0 -371 0 -371 68 3 67 3 5 370 c4 329 7 374 23 402 49 90 154 151 273 160 l74 6 0 70 0 70 -66 -7 c-138 -14 -244 -72 -330 -180 l-31 -39 -82 109 c-45 60 -86 110 -90 112 -4 1 -28 -14 -54 -34z"/>
+                                <path d="M5865 2020 c-193 -39 -348 -189 -399 -387 -21 -79 -21 -228 0 -307 61 -238 264 -396 507 -396 155 0 265 46 372 154 111 112 156 228 156 396 0 167 -49 290 -160 401 -71 70 -139 109 -236 134 -63 16 -173 18 -240 5z m278 -155 c242 -120 301 -482 110 -686 -26 -28 -75 -65 -108 -82 -56 -29 -67 -31 -165 -32 -93 0 -111 3 -162 27 -123 57 -208 175 -228 316 -22 155 26 302 128 394 82 74 155 99 277 95 75 -3 100 -8 148 -32z"/>
+                                <path d="M1852 1483 l3 -528 68 -3 67 -3 0 531 0 530 -70 0 -70 0 2 -527z"/>
+                                <path d="M1868 670 c-25 -26 -29 -36 -24 -63 14 -70 89 -94 133 -43 38 44 28 97 -24 124 -34 18 -52 14 -85 -18z"/>
+                            </g>
+                        </svg>
+                        <h2>Entrar no Portal</h2>
+                        <p>Acesse sua conta</p>
+                    </div>
+                    <form id="portalLoginForm" onsubmit="handlePortalLogin(event)">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="portalLoginEmail" placeholder="seu-email@dominio.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Senha</label>
+                            <input type="password" id="portalLoginPassword" placeholder="••••••••" required>
+                        </div>
+                        <div id="loginError" class="auth-error" style="display: none;"></div>
+                        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                    </form>
+                    <p style="text-align: center; margin-top: var(--spacing-lg); color: var(--text-secondary);">
+                        Não tem conta? <a href="#" onclick="toggleAuthSection(event)" style="color: #ffffff; text-decoration: none; font-weight: 600;">Cadastre-se</a>
+                    </p>
+                </div>
+
+                <!-- REGISTER FORM -->
+                <div id="registerSection" class="auth-section" style="display: none;">
+                    <div class="auth-header-portal">
+                        <svg class="auth-logo-portal" viewBox="0 0 710 296">
+                            <g transform="translate(0,296) scale(0.1,-0.1)" fill="currentColor" stroke="none">
+                                <path d="M1879 2420 c-9 -5 -22 -23 -29 -40 -33 -81 64 -147 125 -85 65 64 -17 171 -96 125z"/>
+                                <path d="M969 2011 c-90 -29 -156 -71 -222 -141 -102 -108 -147 -226 -148 -386 -1 -152 46 -282 138 -384 152 -170 411 -217 615 -114 74 38 168 135 206 214 44 91 44 100 2 115 -66 23 -90 26 -90 13 -1 -28 -57 -121 -99 -163 -25 -25 -70 -58 -100 -73 -49 -24 -68 -27 -151 -27 -87 0 -101 3 -161 32 -295 146 -300 619 -7 769 42 22 70 28 141 32 100 5 156 -7 221 -49 56 -35 121 -116 143 -180 13 -36 22 -48 33 -43 8 3 37 10 63 17 45 10 48 13 42 36 -24 94 -132 235 -222 288 -108 63 -284 83 -404 44z"/>
+                                <path d="M2598 2007 c-227 -78 -373 -310 -354 -566 11 -153 69 -275 176 -375 71 -66 141 -101 240 -122 227 -48 443 55 545 259 48 95 47 101 -22 120 -31 9 -57 16 -58 14 -1 -1 -13 -27 -27 -57 -37 -80 -98 -144 -175 -182 -61 -30 -75 -33 -157 -32 -77 0 -100 4 -148 26 -183 84 -277 302 -223 513 65 247 314 369 535 263 65 -32 132 -105 165 -181 l28 -64 61 17 c71 20 71 22 25 117 -57 118 -169 216 -290 254 -89 28 -233 26 -321 -4z"/>
+                                <path d="M3821 2014 c-83 -22 -150 -62 -222 -134 -255 -252 -191 -723 120 -888 144 -77 336 -80 480 -7 67 33 159 121 200 190 l35 57 -24 18 c-13 10 -36 25 -51 34 -28 17 -28 17 -48 -21 -53 -104 -167 -186 -280 -201 -210 -29 -382 87 -436 293 -8 33 -15 74 -15 92 l0 33 435 0 435 0 0 63 c0 127 -49 252 -135 345 -92 99 -201 143 -355 141 -47 0 -109 -7 -139 -15z m305 -137 c87 -44 150 -132 178 -249 l6 -28 -359 0 -360 0 8 28 c25 85 87 175 155 221 71 49 120 62 226 58 79 -3 104 -8 146 -30z"/>
+                                <path d="M4697 1994 c-26 -20 -47 -41 -47 -46 0 -5 43 -65 95 -133 l95 -124 0 -371 0 -371 68 3 67 3 5 370 c4 329 7 374 23 402 49 90 154 151 273 160 l74 6 0 70 0 70 -66 -7 c-138 -14 -244 -72 -330 -180 l-31 -39 -82 109 c-45 60 -86 110 -90 112 -4 1 -28 -14 -54 -34z"/>
+                                <path d="M5865 2020 c-193 -39 -348 -189 -399 -387 -21 -79 -21 -228 0 -307 61 -238 264 -396 507 -396 155 0 265 46 372 154 111 112 156 228 156 396 0 167 -49 290 -160 401 -71 70 -139 109 -236 134 -63 16 -173 18 -240 5z m278 -155 c242 -120 301 -482 110 -686 -26 -28 -75 -65 -108 -82 -56 -29 -67 -31 -165 -32 -93 0 -111 3 -162 27 -123 57 -208 175 -228 316 -22 155 26 302 128 394 82 74 155 99 277 95 75 -3 100 -8 148 -32z"/>
+                                <path d="M1852 1483 l3 -528 68 -3 67 -3 0 531 0 530 -70 0 -70 0 2 -527z"/>
+                                <path d="M1868 670 c-25 -26 -29 -36 -24 -63 14 -70 89 -94 133 -43 38 44 28 97 -24 124 -34 18 -52 14 -85 -18z"/>
+                            </g>
+                        </svg>
+                        <h2>Criar Conta</h2>
+                        <p>Abra um novo chamado</p>
+                    </div>
+                    <form id="portalRegisterForm" onsubmit="handlePortalRegister(event)">
+                        <div class="form-group">
+                            <label>Nome Completo *</label>
+                            <input type="text" id="portalRegisterNome" placeholder="Seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="portalRegisterEmail" placeholder="seu-email@dominio.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Setor *</label>
+                            <select id="portalRegisterSetor" required>
+                                <option value="">Selecione um setor...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Senha *</label>
+                            <input type="password" id="portalRegisterPassword" placeholder="••••••••" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirmar Senha *</label>
+                            <input type="password" id="portalRegisterPasswordConfirm" placeholder="••••••••" required>
+                        </div>
+                        <div id="registerError" class="auth-error" style="display: none;"></div>
+                        <button type="submit" class="btn btn-primary btn-block">Criar Conta</button>
+                    </form>
+                    <p style="text-align: center; margin-top: var(--spacing-lg); color: var(--text-secondary);">
+                        Já tem conta? <a href="#" onclick="toggleAuthSection(event)" style="color: #ffffff; text-decoration: none; font-weight: 600;">Entre aqui</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- HEADER -->
+        <header class="portal-header" id="portalHeader" style="display: none;">
+            <div class="header-content">
+                <div class="logo-section">
+                    <span class="logo-icon">⚙</span>
+                    <h1>Central de Suporte</h1>
+                    <p>TI-CICERO</p>
+                </div>
+                <div class="header-nav">
+                    <a href="#form-section" class="nav-link">Abrir Chamado</a>
+                    <a href="#chamados-section" class="nav-link">Meus Chamados</a>
+                    <button class="btn btn-secondary" onclick="handlePortalLogout()" style="margin-left: var(--spacing-lg);">Sair</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section class="hero">
+            <h2>Como podemos ajudar você?</h2>
+            <p>Escolha a categoria que melhor descreve seu problema</p>
+        </section>
+
+        <!-- CATEGORIES -->
+        <section class="categories-section">
+            <div class="categories-grid">
+                <div class="category-card" data-category="e_millennium">
+                    <div class="category-icon">🔗</div>
+                    <h3>e-Millennium</h3>
+                    <p>Demandas relacionadas a integrações com Hub's, Gateway's, Sites e Marketplaces</p>
+                </div>
+
+                <div class="category-card" data-category="infra_ti">
+                    <div class="category-icon">🛠</div>
+                    <h3>Infra-Estrutura de TI</h3>
+                    <p>Demandas relacionadas a instalação ou suporte de hardware e ferramentas backoffice</p>
+                </div>
+
+                <div class="category-card" data-category="integracao_terceiros">
+                    <div class="category-icon">🔄</div>
+                    <h3>Integração com Terceiros</h3>
+                    <p>Demandas relacionadas a integrações com sistemas e serviços de terceiros</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORM SECTION -->
+        <section id="form-section" class="form-section" style="display: none;">
+            <div class="form-container">
+                <div class="form-header">
+                    <button class="btn-voltar" onclick="voltar()">← Voltar</button>
+                    <h2 id="form-title"></h2>
+                </div>
+
+                <form id="chamadoForm" onsubmit="submitChamado(event)">
+                    <!-- Campos básicos -->
+                    <div class="form-group">
+                        <label>Nome *</label>
+                        <input type="text" id="portalNome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="portalEmail" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Assunto *</label>
+                        <input type="text" id="portalAssunto" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descrição *</label>
+                        <textarea id="portalDescricao" rows="5" required></textarea>
+                    </div>
+
+                    <!-- Campo extra dinâmico -->
+                    <div id="campoExtraContainer" class="form-group" style="display: none;">
+                        <label id="campoExtraLabel"></label>
+                        <select id="campoExtra"></select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Prioridade</label>
+                            <select id="portalPrioridade">
+                                <option value="baixa">Baixa</option>
+                                <option value="media" selected>Média</option>
+                                <option value="alta">Alta</option>
+                                <option value="critica">Crítica</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Anexo (opcional)</label>
+                            <input type="file" id="portalAnexo">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Abrir Chamado</button>
+                        <button type="button" class="btn btn-secondary" onclick="voltar()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- MEUS CHAMADOS -->
+        <section id="chamados-section" class="chamados-section">
+            <div class="chamados-container">
+                <h2>Meus Chamados</h2>
+
+                <div class="chamados-search">
+                    <input
+                        type="email"
+                        id="emailFilter"
+                        placeholder="Digite seu email para ver seus chamados..."
+                        onkeyup="filtrarChamados()"
+                    >
+                </div>
+
+                <div id="chamadosLista" class="chamados-list">
+                    <p style="text-align: center; color: #999; padding: 40px;">
+                        Digite seu email acima para visualizar seus chamados
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODAL: Detalhes do Chamado -->
+        <div id="chamadoModal" class="modal">
+            <div class="modal-content modal-chamado">
+                <span class="close" onclick="fecharModalChamado()">&times;</span>
+                <h2>Detalhes do Chamado</h2>
+
+                <div class="chamado-info">
+                    <div class="info-row">
+                        <span class="label">ID:</span>
+                        <span class="value" id="modalChamadoId"></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Status:</span>
+                        <span class="value"><span id="modalChamadoStatus" class="badge"></span></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Prioridade:</span>
+                        <span class="value"><span id="modalChamadoPrioridade" class="badge"></span></span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Data de Abertura:</span>
+                        <span class="value" id="modalChamadoData"></span>
+                    </div>
+                    <div class="info-row" id="modalResponsavelRow" style="display: none;">
+                        <span class="label">Responsável:</span>
+                        <span class="value" id="modalChamadoResponsavel"></span>
+                    </div>
+                </div>
+
+                <div class="chamado-description">
+                    <h3>Descrição</h3>
+                    <p id="modalChamadoDescricao"></p>
+                </div>
+
+                <!-- Chat -->
+                <div class="chat-section">
+                    <h3>Conversa</h3>
+                    <div id="chatHistory" class="chat-history"></div>
+
+                    <form id="chatFormPortal" onsubmit="submitPortalChat(event)">
+                        <div class="chat-input-group">
+                            <textarea id="chatInputPortal" placeholder="Digite sua resposta..." rows="3"></textarea>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SheetJS para importar Excel/CSV (se necessário) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
+
+    <!-- Scripts locais (módulo) -->
+    <script type="module" src="portal.js"></script>
+</body>
+</html>
