@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🖥️ TI-CICERO - Sistema de Gerenciamento de Ativos e Chamados
 
 Sistema web completo para gerenciar e controlar ativos de TI, com sistema integrado de chamados para colaboradores e administradores.
@@ -225,3 +226,6 @@ Para dúvidas ou sugestões, entre em contato com o setor de TI.
 **Versão**: 2.0  
 **Última atualização**: 01/04/2026  
 **Desenvolvido para**: Gerenciamento de Ativos e Chamados de TI
+=======
+# ti-cicero
+>>>>>>> bc8658ce36e2021d2aef1f5e96fc6819eb950eb7
