@@ -245,6 +245,35 @@ function showAuthenticatedUI() {
     carregarMeusChamados();
 }
 
+function mostrarAbrir() {
+    const formSection = document.getElementById('form-section');
+    const chamadosSection = document.getElementById('chamados-section');
+    const hero = document.querySelector('.hero');
+    const categoriesSection = document.querySelector('.categories-section');
+
+    if (formSection) formSection.style.display = 'none';
+    if (chamadosSection) chamadosSection.style.display = 'none';
+    if (hero) hero.style.display = 'block';
+    if (categoriesSection) categoriesSection.style.display = 'block';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function mostrarMeus() {
+    const formSection = document.getElementById('form-section');
+    const chamadosSection = document.getElementById('chamados-section');
+    const hero = document.querySelector('.hero');
+    const categoriesSection = document.querySelector('.categories-section');
+
+    if (formSection) formSection.style.display = 'none';
+    if (chamadosSection) chamadosSection.style.display = 'block';
+    if (hero) hero.style.display = 'none';
+    if (categoriesSection) categoriesSection.style.display = 'none';
+
+    carregarMeusChamados();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function showUnauthenticatedUI() {
     const authOverlay = document.getElementById('authOverlay');
     const portalHeader = document.getElementById('portalHeader');
@@ -525,7 +554,7 @@ function filtrarChamados() {
 
     // Renderizar chamados
     const html = chamadosList.map(chamado => `
-        <div class="chamado-card" onclick="abrirChamado(${chamado.id})">
+        <div class="chamado-card" onclick="abrirChamado('${chamado.id}')" style="cursor: pointer;">
             <div class="chamado-card-header">
                 <div>
                     <div class="chamado-id">${chamado.codigo}</div>
@@ -821,3 +850,5 @@ window.submitPortalChat = submitPortalChat;
 window.voltar = voltar;
 window.carregarMeusChamados = carregarMeusChamados;
 window.filtrarChamados = filtrarChamados;
+window.mostrarAbrir = mostrarAbrir;
+window.mostrarMeus = mostrarMeus;

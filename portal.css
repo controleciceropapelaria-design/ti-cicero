@@ -162,18 +162,16 @@ body {
     gap: var(--spacing-md);
 }
 
-.logo-icon { font-size: 1.4rem; opacity: 0.6; }
+.header-logo {
+    color: var(--text-primary);
+    opacity: 0.9;
+    flex-shrink: 0;
+}
 
 .logo-section h1 {
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin: 0;
-}
-
-.logo-section p {
-    font-size: 0.78rem;
-    color: var(--text-muted);
     margin: 0;
 }
 
@@ -184,11 +182,16 @@ body {
 }
 
 .nav-link {
+    background: none;
+    border: none;
     color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.875rem;
     font-weight: 500;
     transition: color 0.2s ease;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-family: inherit;
 }
 
 .nav-link:hover { color: var(--text-primary); }
