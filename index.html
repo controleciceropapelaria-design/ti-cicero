@@ -91,6 +91,10 @@
                     <span class="nav-icon">▣</span>
                     <span class="nav-label">Setores</span>
                 </a>
+                <a href="#" class="nav-item" data-page="funcionarios">
+                    <span class="nav-icon">◉</span>
+                    <span class="nav-label">Funcionários</span>
+                </a>
             </nav>
 
             <div class="sidebar-footer">
@@ -341,6 +345,29 @@
                             </div>
 
                             <div class="setores-grid" id="setoresGrid"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE: Funcionários -->
+                <div class="page" id="page-funcionarios" data-page="funcionarios" style="display: none;">
+                    <div class="page-header">
+                        <div class="breadcrumb">
+                            <span>Home</span>
+                            <span class="breadcrumb-sep">/</span>
+                            <span>Funcionários</span>
+                        </div>
+                    </div>
+                    <div class="page-body">
+                        <div class="funcionarios-container">
+                            <div class="funcionarios-toolbar">
+                                <button id="novoFuncionarioBtn" class="btn btn-primary">+ Novo Funcionário</button>
+                                <input type="text" id="funcionarioSearchInput" placeholder="Pesquisar funcionário...">
+                                <select id="setorFuncionarioFilter">
+                                    <option value="">Todos os setores</option>
+                                </select>
+                            </div>
+                            <div class="funcionarios-grid" id="funcionariosGrid"></div>
                         </div>
                     </div>
                 </div>
@@ -820,6 +847,168 @@
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Salvar</button>
                     <button type="button" class="btn btn-secondary" onclick="closeEditSetorModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Detalhes do Setor -->
+    <div id="setorDetalhesModal" class="modal">
+        <div class="modal-content modal-chat">
+            <span class="close" onclick="fecharSetorDetalhes()">&times;</span>
+            <h2 id="setorDetalhesTitle">Setor</h2>
+
+            <!-- Abas -->
+            <div class="setor-tabs">
+                <button class="setor-tab active" onclick="setorAba('funcionarios', this)">👥 Funcionários e Ativos</button>
+                <button class="setor-tab" onclick="setorAba('sistemas', this)">💻 Sistemas e Aplicativos</button>
+            </div>
+
+            <!-- ABA: Funcionários -->
+            <div id="setorAbaFuncionarios" class="setor-aba-content">
+                <div id="setorFuncionariosLista"></div>
+            </div>
+
+            <!-- ABA: Sistemas -->
+            <div id="setorAbaSistemas" class="setor-aba-content" style="display:none;">
+                <form id="novoSistemaForm" style="display:flex; gap: var(--spacing-md); flex-wrap:wrap; margin-bottom: var(--spacing-lg);">
+                    <input type="text" id="sistemaNome" placeholder="Nome do sistema/app" required
+                        style="flex:1; min-width:150px; padding:9px var(--spacing-md); background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--radius-md); color:var(--text-primary); font-size:0.875rem;">
+                    <select id="sistemaTipo"
+                        style="padding:9px var(--spacing-md); background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--radius-md); color:var(--text-primary); font-size:0.875rem;">
+                        <option value="sistema">Sistema</option>
+                        <option value="aplicativo">Aplicativo</option>
+                        <option value="ferramenta">Ferramenta</option>
+                        <option value="navegador">Navegador</option>
+                        <option value="antivirus">Antivírus</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                    <input type="text" id="sistemaVersao" placeholder="Versão (opcional)"
+                        style="width:130px; padding:9px var(--spacing-md); background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--radius-md); color:var(--text-primary); font-size:0.875rem;">
+                    <input type="text" id="sistemaObs" placeholder="Observação (opcional)"
+                        style="flex:2; min-width:150px; padding:9px var(--spacing-md); background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--radius-md); color:var(--text-primary); font-size:0.875rem;">
+                    <button type="submit" class="btn btn-primary">+ Adicionar</button>
+                </form>
+                <div id="setorSistemasLista"></div>
+            </div>
+
+            <div style="margin-top: var(--spacing-xl); display:flex; justify-content:flex-end;">
+                <button class="btn btn-secondary" onclick="fecharSetorDetalhes()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Novo / Editar Funcionário -->
+    <div id="novoFuncionarioModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="novoFuncionarioModalTitle">Novo Funcionário</h2>
+            <form id="novoFuncionarioForm">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="funcionarioNome" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="funcionarioEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>CPF</label>
+                        <input type="text" id="funcionarioCPF" placeholder="000.000.000-00">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Setor</label>
+                        <select id="funcionarioSetor" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cargo</label>
+                        <input type="text" id="funcionarioCargo" placeholder="Ex: Analista, Vendedor">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-secondary" id="cancelFuncionarioBtn">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Detalhes Funcionário -->
+    <div id="funcionarioDetalhesModal" class="modal">
+        <div class="modal-content modal-chat">
+            <span class="close" onclick="funcionariosManager.closeFuncionarioDetalhesModal()">&times;</span>
+            <h2 id="detalhesNomeFuncTitle">Detalhes do Funcionário</h2>
+
+            <div class="chamado-info-section">
+                <div class="info-row">
+                    <span class="label">Nome:</span>
+                    <span class="value" id="detalhesNomeFunc"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Setor:</span>
+                    <span class="value" id="detalhesSetorFunc"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Cargo:</span>
+                    <span class="value" id="detalheCargoFunc"></span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Email:</span>
+                    <span class="value" id="detalhesEmailFunc"></span>
+                </div>
+            </div>
+
+            <h3 style="margin-top: var(--spacing-xl); color: var(--text-primary); font-size: 0.95rem;">Ativos Atribuídos</h3>
+
+            <div class="tab-section">
+                <h4>Em Uso</h4>
+                <div id="ativosEmUsoDiv" class="ativos-list"></div>
+            </div>
+            <div class="tab-section">
+                <h4>Pendente</h4>
+                <div id="ativosPendenteDiv" class="ativos-list"></div>
+            </div>
+            <div class="tab-section">
+                <h4>Histórico</h4>
+                <div id="ativosHistoricoDiv" class="ativos-list"></div>
+            </div>
+
+            <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: flex-end; flex-wrap: wrap;">
+                <button class="btn btn-secondary" id="editFuncionarioBtn">Editar</button>
+                <button class="btn btn-danger" id="deleteFuncionarioBtn">Excluir</button>
+                <button class="btn btn-primary" id="atribuirAtivoBtn">+ Atribuir Ativo</button>
+                <button class="btn btn-secondary" onclick="funcionariosManager.closeFuncionarioDetalhesModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Atribuir Ativo ao Funcionário -->
+    <div id="assignAssetModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="funcionariosManager.closeAssignAssetModal()">&times;</span>
+            <h2>Atribuir Ativo</h2>
+            <form id="assignAssetForm">
+                <div class="form-group">
+                    <label>Ativo Disponível</label>
+                    <select id="assetSelect" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="assignmentStatus" required>
+                        <option value="em_uso">Em Uso</option>
+                        <option value="pendente">Pendente (a chegar)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Observações</label>
+                    <textarea id="assignmentNotes" rows="3" style="width:100%; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-primary); padding: var(--spacing-md); resize: vertical;"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Atribuir</button>
+                    <button type="button" class="btn btn-secondary" onclick="funcionariosManager.closeAssignAssetModal()">Cancelar</button>
                 </div>
             </form>
         </div>

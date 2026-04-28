@@ -255,24 +255,35 @@ class AtivosManager {
             categoria,
             status: document.getElementById('ativoStatus').value,
             valor: parseFloat(document.getElementById('ativoValor').value) || 0,
-            dataCadastro: new Date().toLocaleDateString('pt-BR'),
             specs: this.collectSpecs(categoria)
         };
 
         try {
-            const { error } = await supabase
-                .from('ativos')
-                .insert([ativo]);
-
-            if (error) throw error;
+            if (this.currentEditId) {
+                const { error } = await supabase
+                    .from('ativos')
+                    .update(ativo)
+                    .eq('id', this.currentEditId);
+                if (error) throw error;
+                alert(`✅ Ativo ${ativo.codigo} atualizado!`);
+            } else {
+                const { error } = await supabase
+                    .from('ativos')
+                    .insert([ativo]);
+                if (error) throw error;
+                alert(`✅ Ativo ${ativo.codigo} cadastrado!`);
+            }
 
             await this.loadAtivos();
             this.closeNovoAtivoModal();
             this.renderAtivos();
-            alert(`✅ Ativo ${ativo.codigo} cadastrado!`);
         } catch (error) {
             console.error('Erro ao cadastrar ativo:', error);
-            alert('Erro ao cadastrar ativo: ' + error.message);
+            if (error.code === '23505') {
+                alert(`❌ Já existe um ativo com o código "${ativo.codigo}". Use um código diferente.`);
+            } else {
+                alert('Erro ao cadastrar ativo: ' + error.message);
+            }
         }
     }
 
@@ -324,7 +335,21 @@ class AtivosManager {
     }
 
     editAtivo(id) {
-        // Implementar edição
+        const ativo = this.ativos.find(a => a.id === id);
+        if (!ativo) return;
+
+        this.currentEditId = id;
+
+        document.getElementById('ativoCodigo').value = ativo.codigo;
+        document.getElementById('ativoDescricao').value = ativo.descricao;
+        document.getElementById('ativoSetor').value = ativo.setor;
+        document.getElementById('ativoCategoria').value = ativo.categoria;
+        document.getElementById('ativoStatus').value = ativo.status;
+        document.getElementById('ativoValor').value = ativo.valor;
+
+        this.toggleSpecsSections(ativo.categoria);
+
+        document.getElementById('novoAtivoModal').classList.add('show');
     }
 
     async deleteAtivo(id) {
@@ -364,8 +389,7 @@ class AtivosManager {
                     setor: row['SETOR'] || row['Setor'] || 'N/A',
                     categoria: this.normalizeCategoryName(row['CATEGORIA'] || row['Categoria'] || ''),
                     status: 'disponivel',
-                    valor: 0,
-                    dataCadastro: new Date().toLocaleDateString('pt-BR')
+                    valor: 0
                 }));
 
                 // Upsert com base no código
@@ -459,5 +483,5 @@ class AtivosManager {
 }
 
 const ativosManager = new AtivosManager();
-ativosManager.init();
+window.ativosManager = ativosManager;
 window.ativosManager = ativosManager;

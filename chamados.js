@@ -375,8 +375,7 @@ class ChamadosManager {
                 chamado_id: chamadoId,
                 remetente: remetente,
                 nome: nomeRemetente,
-                texto: texto,
-                data: new Date().toLocaleDateString('pt-BR') + ' ' + new Date().toLocaleTimeString('pt-BR')
+                texto: texto
             };
 
             const { error } = await supabase
@@ -460,7 +459,7 @@ class ChamadosManager {
                     <div class="chat-message ${msg.remetente}">
                         <div class="chat-message-header">
                             <strong>${msg.nome}</strong>
-                            <span class="chat-message-time">${msg.data}</span>
+                            <span class="chat-message-time">${msg.data || (msg.created_at ? new Date(msg.created_at).toLocaleString('pt-BR') : '')}</span>
                         </div>
                         <div class="chat-message-text">${msg.texto}</div>
                     </div>
@@ -512,7 +511,7 @@ class ChamadosManager {
                     <div class="chat-message ${msg.remetente}">
                         <div class="chat-message-header">
                             <strong>${msg.nome}</strong>
-                            <span class="chat-message-time">${msg.data}</span>
+                            <span class="chat-message-time">${msg.data || (msg.created_at ? new Date(msg.created_at).toLocaleString('pt-BR') : '')}</span>
                         </div>
                         <div class="chat-message-text">${msg.texto}</div>
                     </div>
@@ -692,3 +691,6 @@ function abrirChatDeDetalhes() {
 }
 
 window.chamadosManager = chamadosManager;
+window.fecharDetalhesChamado = fecharDetalhesChamado;
+window.abrirEditorDeDetalhes = abrirEditorDeDetalhes;
+window.abrirChatDeDetalhes = abrirChatDeDetalhes;

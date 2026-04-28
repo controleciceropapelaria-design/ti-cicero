@@ -5,6 +5,7 @@
 import { supabase } from './supabase-config.js';
 import './chamados.js';
 import './ativos.js';
+import './funcionarios.js';
 import './dashboard.js';
 import './erp-navigation.js';
 
@@ -91,6 +92,9 @@ async function initializeApp() {
                 window.chamadosManager.init(),
                 window.ativosManager.init()
             ]);
+            if (window.funcionariosManager) {
+                await window.funcionariosManager.init();
+            }
             console.log('Managers inicializados com sucesso');
         } else {
             console.error('Managers não encontrados no window');
