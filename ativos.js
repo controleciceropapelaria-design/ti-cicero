@@ -349,6 +349,17 @@ class AtivosManager {
 
         this.toggleSpecsSections(ativo.categoria);
 
+        // Limpar todos os campos de specs antes de preencher
+        ['monitorMarca','monitorModelo','monitorTamanho','monitorTipo',
+         'perifericoTipo','perifericoMarca','perifericoModelo',
+         'compMarca','compModelo','compProcessador','compNucleos',
+         'compMemoriaTipo','compMemoriaTamanho','compMemoriaMax',
+         'compSistema','compGpu','compHdTipo','compHdTamanho','compPlacaMae'
+        ].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+        ['connVGA','connHDMI','connDP','connDVI'].forEach(id => {
+            const el = document.getElementById(id); if (el) el.checked = false;
+        });
+
         const s = ativo.specs || {};
 
         if (ativo.categoria === 'monitor') {
