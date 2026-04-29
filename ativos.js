@@ -349,6 +349,39 @@ class AtivosManager {
 
         this.toggleSpecsSections(ativo.categoria);
 
+        const s = ativo.specs || {};
+
+        if (ativo.categoria === 'monitor') {
+            document.getElementById('monitorMarca').value   = s.marca || '';
+            document.getElementById('monitorModelo').value  = s.modelo || '';
+            document.getElementById('monitorTamanho').value = s.tamanho_tela || '';
+            document.getElementById('monitorTipo').value    = s.tipo_painel || '';
+            const conexoes = s.conexoes || [];
+            ['connVGA','connHDMI','connDP','connDVI'].forEach(cid => {
+                const el = document.getElementById(cid);
+                el.checked = conexoes.includes(el.value);
+            });
+        } else if (ativo.categoria === 'periferico') {
+            document.getElementById('perifericoTipo').value  = s.tipo || '';
+            document.getElementById('perifericoMarca').value = s.marca || '';
+            document.getElementById('perifericoModelo').value= s.modelo || '';
+        } else if (ativo.categoria === 'computador' || ativo.categoria === 'notebook') {
+            document.getElementById('compMarca').value         = s.marca || '';
+            document.getElementById('compModelo').value        = s.modelo || '';
+            document.getElementById('compProcessador').value   = s.processador || '';
+            document.getElementById('compNucleos').value       = s.nucleos || '';
+            document.getElementById('compMemoriaTipo').value   = s.memoria_tipo || '';
+            document.getElementById('compMemoriaTamanho').value= s.memoria_tamanho_gb || '';
+            document.getElementById('compMemoriaMax').value    = s.memoria_max_gb || '';
+            document.getElementById('compSistema').value       = s.sistema || '';
+            document.getElementById('compGpu').value           = s.gpu || '';
+            document.getElementById('compHdTipo').value        = s.hd_tipo || '';
+            document.getElementById('compHdTamanho').value     = s.hd_tamanho_gb || '';
+            if (ativo.categoria === 'computador') {
+                document.getElementById('compPlacaMae').value = s.placa_mae || '';
+            }
+        }
+
         document.getElementById('novoAtivoModal').classList.add('show');
     }
 
